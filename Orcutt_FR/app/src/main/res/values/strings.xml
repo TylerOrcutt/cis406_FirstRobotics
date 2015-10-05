@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">4-H Force Robotics</string>
+
+    <string name="title_section1">Home</string>
+    <string name="title_section2">Contacts</string>
+    <string name="title_section3">About</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="action_settings">Settings</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_edit_contact">EditContact</string>
+
+    <string name="hello_world">Hello world!</string>
+
+
+    <string name="EditContactFirstName">First Name:</string>
+    <string name="EditContactLastName">Last Name:</string>
+    <string name="EditContactSaveBtn">Save</string>
+    <string name="title_activity_view_contact">ViewContact</string>
+
+    <string name="actionBar_edit">Edit</string>
+    <string name="viewContact_action_settings">Edit</string>
+    <string name="about_description">The 4-H Force Robotics Team is a small team from Jefferson County Pennsylvania.  Our Team has 8 very dedicated members and great mentors who help guide the team to success.​ Our team was established in December of 2011. We participated in the Pittsburgh Regional on March 8-10, 2012 and were awarded the Rookie All-Star award and the UL Safety award. We got to travel to St. Louis Missouri to compete in the world championship.​ We competed in 2013 at Pittsburgh again and were awarded the Imagery Award. For the 2014 and 2015 competition the team traveled to California University of Pennsylvania. Our major sponsors are Miller Welding and Machine of Brookville, Pennsylvania and Penn State University. We also have many other local sponsors.  We are very thankful for each and every sponsor who has helped and supported us along the way.</string>
+</resources>
