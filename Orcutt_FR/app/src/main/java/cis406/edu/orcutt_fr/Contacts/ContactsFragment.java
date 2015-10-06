@@ -89,13 +89,31 @@ public class ContactsFragment extends Fragment {
         cursor.close();
         //set up the adapter
         adapter = new ContactListAdapter(getContext(),R.layout.contact_list_item,contacts);
-        //connect it to the listview
 
     }
+@Override
+public void onStart(){
+    super.onStart();
+    //query db
+    cursor = db.query("FR_contacts",null,null,null,null,null,"firstName ASC");
+    contacts = new ArrayList<Contact>();
+    cursor.moveToFirst();
+    //add each item to the contacts list
+    for(int i=0;i<cursor.getCount();i++){
+        contacts.add(new Contact(cursor.getInt(cursor.getColumnIndex("_id")), cursor.getString(cursor.getColumnIndex("firstName")),
+                cursor.getString(cursor.getColumnIndex("lastName")), cursor.getString(cursor.getColumnIndex("cellPhone"))));
+        cursor.moveToNext();
+    }
+    cursor.close();
+    //set up the adapter
+    adapter = new ContactListAdapter(getContext(),R.layout.contact_list_item,contacts);
 
+}
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
         View inf = inflater.inflate(R.layout.fragment_contacts, container, false);
         contactList= (ListView) inf.findViewById(R.id.contacts_listView);

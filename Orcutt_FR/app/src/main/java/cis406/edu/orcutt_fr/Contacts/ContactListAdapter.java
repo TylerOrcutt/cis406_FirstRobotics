@@ -36,16 +36,33 @@ public class ContactListAdapter extends ArrayAdapter {
     public View getView(int pos, View convertView,ViewGroup parent){
         //set up the view
         Contact citem = contacts.get(pos);
-        int type=getItemViewType(pos);
-        convertView = LayoutInflater.from(getContext()).inflate(R.layout.contact_list_item,null);
-        //get the textView
-        TextView txt = (TextView)convertView.findViewById(R.id.contacts_Name_TextView);
-        //set its value
-        txt.setText(citem.getFirstName() + " " + citem.getLastName());
 
-        TextView numberText = (TextView) convertView.findViewById(R.id.contacts_Number_TextView);
-        numberText.setText(citem.getNumber());
+        if(citem.isSeparator()) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.separator,null);
+            TextView txt = (TextView) convertView.findViewById((R.id.seperator_text));
+            txt.setText(citem.getSepText());
 
+
+        }else if(citem.isViewEntry()) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.contact_list_item, null);
+            //get the textView
+            TextView txt = (TextView) convertView.findViewById(R.id.contacts_Name_TextView);
+            //set its value
+            txt.setText(citem.getNumber());
+            TextView numberText = (TextView) convertView.findViewById(R.id.contacts_Number_TextView);
+            numberText.setText(citem.getContactType());
+
+
+        }else{
+
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.contact_list_item, null);
+            //get the textView
+            TextView txt = (TextView) convertView.findViewById(R.id.contacts_Name_TextView);
+            //set its value
+            txt.setText(citem.getFirstName() + " " + citem.getLastName());
+            TextView numberText = (TextView) convertView.findViewById(R.id.contacts_Number_TextView);
+            numberText.setText(citem.getNumber());
+        }
         //return view
         return convertView;
 

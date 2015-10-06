@@ -9,7 +9,8 @@
         android:id="@+id/contacts_Name_TextView"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#1d1d1d" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,5 +21,6 @@
         android:layout_toRightOf="@+id/contacts_Name_TextView"
         android:layout_toEndOf="@+id/contacts_Name_TextView"
         android:layout_marginLeft="25dp"
-        android:layout_marginStart="23dp" />
+        android:layout_marginStart="23dp"
+        android:textColor="#6a000000" />
 </LinearLayout>

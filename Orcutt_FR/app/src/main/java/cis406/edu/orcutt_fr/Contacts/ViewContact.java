@@ -3,13 +3,20 @@ package cis406.edu.orcutt_fr.Contacts;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toolbar;
+
+import java.util.ArrayList;
 
 import cis406.edu.orcutt_fr.Database.DatabaseHelper;
 import cis406.edu.orcutt_fr.R;
@@ -18,6 +25,7 @@ public class ViewContact extends AppCompatActivity {
    protected int id=-1;
     protected SQLiteDatabase db;
     protected Cursor cursor;
+    protected ArrayList<Contact> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,29 +33,42 @@ public class ViewContact extends AppCompatActivity {
         Intent intent = getIntent();
         id=intent.getIntExtra("Contact_id",-1);
         Log.d("EditContact", String.valueOf(id));
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         db = (new DatabaseHelper( this.getBaseContext()).getWritableDatabase());
 
-        //dispatch thread bc this is SLOOOOWWW
 
-                if(id>-1){
-                    //find the user that was selected
-                    cursor = db.rawQuery("SELECT * from FR_contacts where _id="+id,null);
-                    cursor.moveToFirst();
-                    String fName = ( cursor.getString(cursor.getColumnIndex("firstName")));
-                    String lName=( cursor.getString(cursor.getColumnIndex("lastName")));
-                    setTitle(fName +" " + lName);
-         /*   EditText edit1 = (EditText) findViewById(R.id.EditFIrstName);
-            EditText edit2 = (EditText) findViewById(R.id.EditLastName);
+    }
+    @Override
+    public void onStart(){
+        super.onStart();
+        if(id>-1){
+            //find the user that was selected
+            cursor = db.rawQuery("SELECT * from FR_contacts where _id="+id,null);
+            cursor.moveToFirst();
             String fName = ( cursor.getString(cursor.getColumnIndex("firstName")));
             String lName=( cursor.getString(cursor.getColumnIndex("lastName")));
-            setTitle(fName +" " + lName);
-            edit1.setText(fName);
-            edit2.setText(lName);*/
-                    cursor.close();
-                }else {
-                    setTitle("New Contact");
-                }
+            setTitle("");
+            TextView name_txt= (TextView) findViewById(R.id.view_contact_name);
+            name_txt.setText(fName + " " + lName);
 
+
+
+
+            list = new ArrayList<Contact>();
+
+            list.add(new Contact(true,"Phone"));
+            list.add(new Contact(true,( cursor.getString(cursor.getColumnIndex("cellPhone"))),"MOBILE"));
+            list.add(new Contact(true,( cursor.getString(cursor.getColumnIndex("officePhone"))),"OFFICE"));
+            list.add(new Contact(true,"Email"));
+            list.add(new Contact(true, (cursor.getString(cursor.getColumnIndex("email"))), "EMAIL"));
+            cursor.close();
+            ListView listv = (ListView) findViewById(R.id.view_contact_listView);
+            listv.setAdapter(new ContactListAdapter(this.getApplicationContext(),R.layout.contact_list_item,list));
+        }else {
+            setTitle("New Contact");
+        }
 
     }
 
@@ -65,6 +86,7 @@ public class ViewContact extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {

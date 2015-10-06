@@ -99,11 +99,11 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        ArrayList<String> items = new ArrayList<String>();
-        items.add("");
-        items.add(getString(R.string.title_section1));
-        items.add(getString(R.string.title_section2));
-        items.add(getString(R.string.title_section3));
+        ArrayList<NavigationListItem> items = new ArrayList<NavigationListItem>();
+        items.add(new NavigationListItem("",0));
+        items.add(new NavigationListItem(getString(R.string.title_section1),R.drawable.ic_home));
+        items.add(new NavigationListItem(getString(R.string.title_section2),R.drawable.ic_contacts));
+        items.add(new NavigationListItem(getString(R.string.title_section3),R.drawable.ic_about));
                 mDrawerListView.setAdapter(new NavigationDrawerListAdapter(
                         getActionBar().getThemedContext(), R.layout.contact_list_item, items));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
@@ -175,7 +175,7 @@ public class NavigationDrawerFragment extends Fragment {
         // If the user hasn't 'learned' about the drawer, open it to introduce them to the drawer,
         // per the navigation drawer design guidelines.
         if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
-            mDrawerLayout.openDrawer(mFragmentContainerView);
+          //  mDrawerLayout.openDrawer(mFragmentContainerView);
         }
 
         // Defer code dependent on restoration of previous instance state.

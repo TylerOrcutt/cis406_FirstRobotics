@@ -1,5 +1,6 @@
 package cis406.edu.orcutt_fr.Contacts;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import cis406.edu.orcutt_fr.Database.DatabaseHelper;
@@ -20,6 +23,12 @@ public class EditContact extends AppCompatActivity {
     private int id;
     protected SQLiteDatabase db;
     protected Cursor cursor;
+    private  EditText editFName;
+    private  EditText editLName;
+    private  EditText editMobile;
+    private  EditText editOffice;
+    private  EditText editEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,25 +37,74 @@ public class EditContact extends AppCompatActivity {
         Intent intent = getIntent();
         id=intent.getIntExtra("Contact_id",-1);
         Log.d("EditContact", String.valueOf(id));
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_checkmark);
+        setTitle("Done");
         db = (new DatabaseHelper( this.getBaseContext()).getWritableDatabase());
+
+
+        Button saveBtn = (Button) findViewById(R.id.Edit_button_save);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Edit","Contact save button clicked");
+                if(editFName.getText().toString().equalsIgnoreCase("")){
+                    //need atleast a name
+                    //show error
+                    return;
+                }
+                if(id>-1){
+                    ContentValues values = new ContentValues();
+
+                    values.put("firstName", editFName.getText().toString());
+                    values.put("lastName", editLName.getText().toString());
+                    values.put("officePhone", editOffice.getText().toString());
+                    values.put("cellPhone", editMobile.getText().toString());
+                    values.put("email", editEmail.getText().toString());
+                    db.update("FR_contacts", values, "_id=" + id, null);
+                    Log.d("Edit","Contact Saved");
+                }else{//new contact
+                    ContentValues values = new ContentValues();
+
+                    values.put("firstName", editFName.getText().toString());
+                    values.put("lastName", editLName.getText().toString());
+                    values.put("officePhone", editOffice.getText().toString());
+                    values.put("cellPhone", editMobile.getText().toString());
+                    values.put("email", editEmail.getText().toString());
+                    db.insert("FR_contacts", "lastName", values);
+                }
+            }
+        });
+
+
+
+
         if(id>-1){
             //find the user that was selected
-
-
-
-                   EditText edit1 = (EditText) findViewById(R.id.EditFIrstName);
-                    EditText edit2 = (EditText) findViewById(R.id.EditLastName);
             cursor = db.rawQuery("SELECT * from FR_contacts where _id="+id,null);
             if(cursor.getCount()>0) {
                 cursor.moveToFirst();
                 String fName = ( cursor.getString(cursor.getColumnIndex("firstName")));
                 String lName=( cursor.getString(cursor.getColumnIndex("lastName")));
 
+                editFName = (EditText) findViewById(R.id.editFirstName);
+                editFName.setText(( cursor.getString(cursor.getColumnIndex("firstName"))));
+
+                 editLName = (EditText) findViewById(R.id.editLastName);
+                editLName.setText(( cursor.getString(cursor.getColumnIndex("lastName"))));
+
+                 editMobile = (EditText) findViewById(R.id.editMobile);
+                editMobile.setText(( cursor.getString(cursor.getColumnIndex("cellPhone"))));
+
+                 editOffice = (EditText) findViewById(R.id.editOffice);
+                editOffice.setText(( cursor.getString(cursor.getColumnIndex("officePhone"))));
+
+                editEmail = (EditText) findViewById(R.id.editEmail);
+                editEmail.setText(( cursor.getString(cursor.getColumnIndex("email"))));
+
                 cursor.close();
-                setTitle(fName + " " + lName);
-                edit1.setText(fName);
-                edit2.setText(lName);
+
+
                 return;
             }
             Log.d("EditContact", "Could not find contact");
@@ -55,6 +113,8 @@ public class EditContact extends AppCompatActivity {
         }
         id=-1;
         setTitle("New Contact");
+
+
 
     }
 

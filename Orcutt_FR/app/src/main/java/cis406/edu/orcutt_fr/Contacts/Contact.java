@@ -18,12 +18,17 @@ import cis406.edu.orcutt_fr.R;
 public class Contact {
     private int id;
     private String firstName, lastName, number;
+    private boolean separator;
+    private String sepText;
+    private boolean isViewEntry=false;
+    private String contactType;
 //constructor
     public Contact(int id, String first, String last, String number) {
         this.id = id;
         this.firstName = first;
         this.lastName = last;
         this.number = number;
+        separator=false;
     }
     //constructor
     public Contact(int id, String first) {
@@ -31,6 +36,29 @@ public class Contact {
         this.firstName = first;
         this.lastName = "";
         this.number = "";
+        separator=false;
+    }
+
+    public Contact(boolean isSeparator, String sepText) {
+        this.id = -1;
+        this.firstName = "";
+        this.lastName = "";
+        this.number = "";
+       this.separator=isSeparator;
+        this.sepText = sepText;
+        isViewEntry=false;
+
+    }
+    public Contact(boolean isViewEntry, String number, String type) {
+        this.id = -1;
+        this.firstName = "";
+        this.lastName = "";
+        this.number = number;
+        this.separator=false;
+        this.isViewEntry=isViewEntry;
+        this.contactType=type;
+
+
     }
 //getters setters
     int getId() {
@@ -65,4 +93,16 @@ public class Contact {
         this.number = number;
     }
 
+    boolean isSeparator(){
+        return separator;
+    }
+    String getSepText(){
+        return sepText;
+    }
+    boolean isViewEntry(){
+        return this.isViewEntry;
+    }
+    String getContactType(){
+        return contactType;
+    }
 }
