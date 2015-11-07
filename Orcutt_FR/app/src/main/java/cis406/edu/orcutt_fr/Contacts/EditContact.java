@@ -38,44 +38,52 @@ public class EditContact extends AppCompatActivity {
         id=intent.getIntExtra("Contact_id",-1);
         Log.d("EditContact", String.valueOf(id));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_checkmark);
-        setTitle("Done");
+       // getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_checkmark);
+
+    //    setTitle("Done");
         db = (new DatabaseHelper( this.getBaseContext()).getWritableDatabase());
 
 
         Button saveBtn = (Button) findViewById(R.id.Edit_button_save);
+        editFName = (EditText) findViewById(R.id.editFirstName);
+        editLName = (EditText) findViewById(R.id.editLastName);
+        editMobile = (EditText) findViewById(R.id.editMobile);
+        editOffice = (EditText) findViewById(R.id.editOffice);
+        editEmail = (EditText) findViewById(R.id.editEmail);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Edit","Contact save button clicked");
-                if(editFName.getText().toString().equalsIgnoreCase("")){
+                Log.d("Edit", "Contact save button clicked");
+                Log.d("Edit", String.valueOf(id));
+                if (editFName.getText().toString().equalsIgnoreCase("")) {
                     //need atleast a name
                     //show error
                     return;
                 }
-                if(id>-1){
+                if (id >=0) {
                     ContentValues values = new ContentValues();
-
+                    Log.d("EditContact", "saving contact");
                     values.put("firstName", editFName.getText().toString());
                     values.put("lastName", editLName.getText().toString());
                     values.put("officePhone", editOffice.getText().toString());
                     values.put("cellPhone", editMobile.getText().toString());
                     values.put("email", editEmail.getText().toString());
                     db.update("FR_contacts", values, "_id=" + id, null);
-                    Log.d("Edit","Contact Saved");
-                }else{//new contact
-                    ContentValues values = new ContentValues();
+                    Log.d("Edit", "Contact Saved");
+                } else {//new contact
+                    Log.d("EditContact", "adding new contact");
+                      ContentValues values = new ContentValues();
 
-                    values.put("firstName", editFName.getText().toString());
-                    values.put("lastName", editLName.getText().toString());
+                      values.put("firstName", editFName.getText().toString());
+                      values.put("lastName", editLName.getText().toString());
                     values.put("officePhone", editOffice.getText().toString());
                     values.put("cellPhone", editMobile.getText().toString());
                     values.put("email", editEmail.getText().toString());
-                    db.insert("FR_contacts", "lastName", values);
+                     db.insert("FR_contacts", "_id", values);
                 }
+                finish();
             }
         });
-
 
 
 
@@ -87,19 +95,19 @@ public class EditContact extends AppCompatActivity {
                 String fName = ( cursor.getString(cursor.getColumnIndex("firstName")));
                 String lName=( cursor.getString(cursor.getColumnIndex("lastName")));
 
-                editFName = (EditText) findViewById(R.id.editFirstName);
+
                 editFName.setText(( cursor.getString(cursor.getColumnIndex("firstName"))));
 
-                 editLName = (EditText) findViewById(R.id.editLastName);
+
                 editLName.setText(( cursor.getString(cursor.getColumnIndex("lastName"))));
 
-                 editMobile = (EditText) findViewById(R.id.editMobile);
+
                 editMobile.setText(( cursor.getString(cursor.getColumnIndex("cellPhone"))));
 
-                 editOffice = (EditText) findViewById(R.id.editOffice);
+
                 editOffice.setText(( cursor.getString(cursor.getColumnIndex("officePhone"))));
 
-                editEmail = (EditText) findViewById(R.id.editEmail);
+
                 editEmail.setText(( cursor.getString(cursor.getColumnIndex("email"))));
 
                 cursor.close();
@@ -130,10 +138,14 @@ public class EditContact extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
+        int mid = item.getItemId();
+        if (mid == android.R.id.home) {
+            //  Log.d("view", "Home pressed");
+            finish();
+            return true;
+        }
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (mid == R.id.action_settings) {
             return true;
         }
 

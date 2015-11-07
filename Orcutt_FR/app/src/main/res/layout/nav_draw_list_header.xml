@@ -7,8 +7,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageView2"
         android:src="@mipmap/ic_logo"
-        android:minHeight="128sp"
-        android:minWidth="128sp"
+        android:minHeight="256sp"
+        android:minWidth="256sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

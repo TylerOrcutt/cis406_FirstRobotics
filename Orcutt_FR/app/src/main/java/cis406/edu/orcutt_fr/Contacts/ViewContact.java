@@ -7,9 +7,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -80,19 +82,24 @@ public class ViewContact extends AppCompatActivity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        int mid = item.getItemId();
+        if (mid == android.R.id.home) {
+          //  Log.d("view", "Home pressed");
+            finish();
             return true;
         }
-        if(id == R.id.viewContact_edit){
+
+        //noinspection SimplifiableIfStatement
+        if (mid == R.id.action_settings) {
+            return true;
+        }
+        if(mid == R.id.viewContact_edit){
             Intent intent = new Intent(this,EditContact.class);
             int contact_id =getIntent().getIntExtra("Contact_id",-1);
             intent.putExtra("Contact_id",contact_id);
@@ -102,4 +109,7 @@ public class ViewContact extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }

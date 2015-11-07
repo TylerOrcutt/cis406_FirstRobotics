@@ -6,8 +6,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/nav_item_image"
-        android:minHeight="50sp"
-        android:minWidth="50sp"
+        android:minHeight="65sp"
+        android:minWidth="65sp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:layout_alignParentTop="true"
@@ -21,11 +21,13 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/nav_item_text"
-        android:padding="10dp"
-        android:paddingLeft="10dp"
-        android:clickable="false"
-        android:textColor="#00ff31"
         android:layout_alignBottom="@+id/nav_item_image"
         android:layout_toRightOf="@+id/nav_item_image"
-        android:layout_toEndOf="@+id/nav_item_image" />
+        android:layout_toEndOf="@+id/nav_item_image"
+        android:layout_alignParentTop="true"
+        android:textColor="#00ff24"
+        android:textSize="25sp"
+        android:paddingTop="14sp"
+        android:paddingLeft="15sp" />
+
 </RelativeLayout>

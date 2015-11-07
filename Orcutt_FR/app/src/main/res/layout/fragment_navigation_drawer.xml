@@ -1,8 +1,8 @@
 <ListView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:choiceMode="singleChoice"
-    android:divider="#8d8a89" android:dividerHeight="1dp"
+    android:divider="#8d8a89"  android:dividerHeight="1dp"
     android:background="#000" tools:context=".NavigationDrawerFragment"
     android:footerDividersEnabled="false"
-    android:headerDividersEnabled="true"
+    android:headerDividersEnabled="false"
     android:clickable="false" />

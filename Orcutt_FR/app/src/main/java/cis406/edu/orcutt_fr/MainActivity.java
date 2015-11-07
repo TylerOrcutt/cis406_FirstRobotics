@@ -31,11 +31,16 @@ public class MainActivity extends AppCompatActivity
      */
     private CharSequence mTitle;
     protected SQLiteDatabase db;
+    private int CurPosition =0;
+    private Fragment curFag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+       // this.overridePendingTransition(R.animator.aim_slide_out_left,
+          //      R.animator.aim_slide_in_right);
         db = (new DatabaseHelper(this)).getWritableDatabase();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -54,6 +59,7 @@ public class MainActivity extends AppCompatActivity
         //find what view to nav to
         Class fragClass=null;
         position--;
+        CurPosition=position;
         switch (position){
 
             case 0:
@@ -61,6 +67,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case 1:
                 fragClass=ContactsFragment.class;
+              //  ((MenuItem)findViewById(R.id.viewContact_add)).setVisible(true);
 
                 break;
             case 2:
@@ -73,6 +80,7 @@ public class MainActivity extends AppCompatActivity
         Fragment frag=null;
         try {
              frag = (Fragment)fragClass.newInstance();
+            curFag=frag;
         }catch (Exception e){
             Log.d("M","FAILED TO CREATE NEW INSTANCE");
         }
@@ -82,7 +90,16 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.container, frag)
                 .commit();
     }
+@Override
+public void onStart(){
+    super.onStart();
+    Log.d("maina","started");
+    if(CurPosition==1){
+        curFag.onStart();
+        (( ContactsFragment)curFag).onStart();
 
+    }
+}
     public void onSectionAttached(int number) {
 
         switch (number) {
